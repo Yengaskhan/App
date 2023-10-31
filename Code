@@ -1,0 +1,51 @@
+Clevanalytics/
+├── app.py
+├── templates/
+│   ├── index.html
+├── articles/
+│   ├── article1.html
+│   ├── article2.html
+└── static/
+    ├── styles.css
+
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    # List of articles (you can use a database in a real app)
+    articles = [
+        {
+            'title': 'Article 1',
+            'content': 'This is the content of Article 1...',
+        },
+        {
+            'title': 'Article 2',
+            'content': 'This is the content of Article 2...',
+        }
+    ]
+    return render_template('index.html', articles=articles)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clevanalytics</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Welcome to Clevanalytics</h1>
+    <h2>Latest Articles</h2>
+    <ul>
+        {% for article in articles %}
+            <li>
+                <h3>{{ article['title'] }}</h3>
+                <p>{{ article['content'] }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
